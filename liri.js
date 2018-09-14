@@ -4,14 +4,13 @@ var keys = require('./keys.js');
 
 var Twitter = require('twitter');
 
-var spotify = require('spotify');
+var Spotify = require('spotify');
 
 var request = require('request');
 
 var fs = require('fs');
 
 // var spotify = new Spotify(keys.spotify);
-
 
 var spotify = require('spotify');
 
@@ -32,31 +31,33 @@ var getMyTweets = function(){
     });
 } 
 
-var getArtistNames = function(artist) {
-    return artist.name;
-}
+// var getArtistNames = function(artist) {
+//     return artist.name;
+// }
 
-var getMeSpotify = function(songName) {
+// var getMeSpotify = function(songName) {
+//     console.log(Spotify);
     
-spotify.search({type: 'track', query: songName }
-    , function(err, data){
-    if (err) {
-        console.log('Error occured: ' + err);
-        return;
-    }
-    var songs = data.tracks.items;
-    for(var i=0; i<songs.length; i++) {
-        console.log(i);
-        console.log('artist(s): ' + songs[i].artists.map(
-            getArtistNames));
-        console.log('song name: ' + songs[i].name);
-        console.log('preview song: ' + songs[i].preview_url);
-        console.log('album: ' + songs[i].album.name);
-        console.log('-------------------------------------');
-    }
-});
+// spotify.search({type: 'track', query: songName }
+//     , function(err, data){
+//     if (err) {
+//         console.log('Error occured: ' + err);
+//         return;
+//     }
+//     console.log(data);
+//     var songs = data.tracks.items;
+//     for(var i=0; i<songs.length; i++) {
+//         console.log(i);
+//         console.log('artist(s): ' + songs[i].artists.map(
+//             getArtistNames));
+//         console.log('song name: ' + songs[i].name);
+//         console.log('preview song: ' + songs[i].preview_url);
+//         console.log('album: ' + songs[i].album.name);
+//         console.log('-------------------------------------');
+//     }
+// });
 
-}
+// }
 
 var getMeMovie = function(movieName) {
 
@@ -84,6 +85,8 @@ fs.readFile('random.txt', 'utf8', function(err, data) {
    
     var dataArr = data.split(',');
 
+    console.log(dataArr)
+
     if(dataArr.length == 2) {
         pick(dataArr[0], dataArr[1]);
     } else if (dataArr.length == 1){
@@ -92,8 +95,10 @@ fs.readFile('random.txt', 'utf8', function(err, data) {
   });
 }
 var pick = function(caseData, functionData) {
+    console.log(caseData);
+    console.log(functionData);
     switch(caseData) {
-        case 'my-tweets'  :
+        case 'my-tweets':
             getMyTweets();
             break;
         case 'spotify-this-song':
@@ -101,15 +106,17 @@ var pick = function(caseData, functionData) {
             break; 
         case 'movie-this':
             getMeMovie(functionData);
+            break;
         case 'do-what-it-says':
             doWhatItSays();
             break;
         default:
-        console.log('LIRI does not know that');
+            console.log('LIRI does not know that');
     }
 }
 
 var runThis = function(argOne, argTwo) {
+    console.log(argOne, argTwo);
     pick(argOne, argTwo);
 };
 
